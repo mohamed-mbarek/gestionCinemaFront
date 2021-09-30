@@ -1,0 +1,238 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css"
+    integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<app-header></app-header>
+<div class="container bootdey" id="main-container">
+    <div class="row">
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Liste de Affiches </h2>
+            </div>
+            <div class="form-group mb-2">
+
+                <button type="button" (click)="onOpenModal(null,'add')" class="btn btn-primary bu22" data-toggle="modal"
+                    data-target="#exampleModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+                    </svg>
+                    Ajouter
+                </button>
+
+                <div class="form-inline">
+                    <div class="input-group aaaa">
+                        <input (ngModelChange)="searchAffiche(key.value)" #key="ngModel" ngModel type="text"
+                            class="form-control" placeholder="Nom Cinema ..." aria-label="Username"
+                            aria-describedby="basic-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" (click)="ngOnInit()">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row az">
+
+                <!-- -------------------------alerttttttttt --------------------------------------->
+                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+                    rel="stylesheet">
+                <div class="container bootstrap snippets bootdey">
+                    <br>
+                    <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                        <div class="icon">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <strong>Succès!</strong>
+                        {{message}}
+                    </div>
+                    <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                        <div class="icon">
+                            <i class="fa fa-times-circle"></i>
+                        </div>
+                        <strong> Erreur !</strong>
+                        {{message}}
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-12 mt-4 pt-2" *ngFor="let a of affiches">
+                    <div class="team text-center rounded p-3 py-4">
+                        <img src="/assets/image/{{a.image}}" class="img avatar avatar-medium shadow rounded-pill"
+                            alt="">
+                        <div class="content mt-3">
+                            <h4 class="title mb-0 titre">{{a.film.titre}}</h4>
+                            <ul class="list-unstyled mt-3 social-icon social mb-0">
+                                <a (click)="onOpenModal(a,'delete')" class="table-link danger">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-square fa-stack-2x"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash fa-trash-o fa-stack-1x fa-inverse"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                            <path fill-rule="evenodd"
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                                <a (click)="onOpenModal(a,'edit')" class="table-link text-info">
+                                    <span class="fa-stack">
+                                        <i class="fa fa-square fa-stack-2x"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-pencil fa-trash-o fa-stack-1x fa-inverse"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                        </svg>
+                                    </span>
+                                </a>
+                            </ul>
+                            <!--end icon-->
+                        </div>
+                    </div>
+                </div>
+                <!--end col-->
+            </div>
+
+
+
+            <!-- Notification de 0 recherche -->
+            <div *ngIf="affiches?.length === 0" class="col-lg-12 col-md-8 col-xl-8 zz">
+                <div class="alert alert-danger aaq" role="alert">
+                    <h4 class="alert-heading">Aucune Affiche !</h4>
+                    <p>Aucune Affiche categorie !.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--  ********************************* Ajouter une Affiche ******************************* -->
+<div class="modal fade" id="addAfficheModel" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEmployeeModalLabel">Ajouter une Affiche</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="onAddAffiche(addForm)">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Films</label>
+                        </div>
+                        <select id="inputState" class="form-control" ngModel name="film" required>
+                            <option [ngValue]="f.id" *ngFor="let f of ListFilm">
+                                {{f.titre}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image"> Image </label><br>
+                        <input ngModel type="file" id="imageid" name="image" accept="image/png, .jpeg, .jpg, image/gif"
+                            required><br><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="add-Affiche-form" class="btn btn-danger"
+                            data-dismiss="modal">Fermer</button>
+                        <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--  ********************************* modifier une Affiche ******************************* -->
+<div class="modal fade" id="updateAfficheModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEmployeeModalLabel">Modifier une Affiche</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #editForma="ngForm">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Films</label>
+                        </div>
+                        <select id="inputState" class="form-control" [ngModel]="editAffiche?.film.id" name="film"
+                            required>
+                            <option [ngValue]="f.id" *ngFor="let f of ListFilm">
+                                {{f.titre}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="image"> Image </label><br>
+                        <input [ngModel]="editAffiche?.image" type="file" id="imageid" name="image"
+                            accept="image/png, .jpeg, .jpg, image/gif"><br><br>
+                        <input ngModel={{editAffiche?.id}} type="hidden" name="id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="fermer-Affiche" class="btn btn-danger"
+                            data-dismiss="modal">Fermer</button>
+                        <button [disabled]="editForma.invalid" (click)="onUpdateAffiche(editForma)"
+                            class="btn btn-primary">Envoyer</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ---------------------------------Delete Modal  -------------------------->
+
+<div class="modal fade" id="deleteAfficheModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Effacer Affiche <b
+                        class="b">{{deleteAffiche?.film.titre}}</b> </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Etes-vous sûr que vous voulez supprimer cette Affiche "
+                </p>
+                <div class="modal-footer">
+                    <button type="button" id="delete-form" class="btn btn-secondary"
+                        data-dismiss="modal">Annuler</button>
+                    <button (click)="onDeleteAffiche(deleteAffiche?.id)" class="btn btn-danger"
+                        data-dismiss="modal">Effacer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,211 @@
+<app-menu></app-menu>
+<div class=" register" id="main-container">
+    <div class="row">
+        <div class="col-md-3 register-left">
+            <img src="https://gazenergie.ch/fileadmin/_processed_/b/e/csm_Login_c148e8b0a7.png" alt=""/>
+            <h3>Bienvenue <i class="fa fa-smile-o" aria-hidden="true"></i>
+            </h3>
+            <p>Connectez-vous à votre compte pour continuer !</p>
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Inscription</a>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading"> Connexion au compte</h3>
+                    
+                    <div class="row register-form">
+                        
+                        <div class="col-md-6">
+                    
+                            <div class="col-lg-12 login-key">
+                                <i class="fa fa-key" aria-hidden="true"></i>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                        <form #addForm="ngForm">                 
+                            
+                            <div class="form-group">
+                                <div class="alert alert-danger" *ngIf="erreur==1">
+                                    Échec de connection.! <i class="fa fa-meh-o" aria-hidden="true"></i>
+                                </div>
+                                <label>Email</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i>                                      </span>
+                                    </div>
+                                    <input  (click)="resetErreur()" type="email" [(ngModel)]="user.email" id="emaila"  name="email" class="form-control" placeholder="Votre Email" aria-label="Username" aria-describedby="basic-addon1" #email="ngModel" required email> 
+                                </div>
+                                <span *ngIf="email.invalid && email.touched"  class="help-block aze">  Email invalid !</span>
+                            </div>
+                                   <div class="form-group">
+                                        <label>Mot de passe</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text" id="basic-addon1"><i class="fa fa-key" aria-hidden="true"></i>                                              </span>
+                                            </div>
+                                            <input  [(ngModel)]="user.password" type="password"  name="password" class="form-control" placeholder="Votre mot de passe " aria-label="Username" aria-describedby="basic-addon1" #pass="ngModel" required> 
+                                          </div>
+                                          <span *ngIf="pass.invalid && pass.touched"  class="help-block aze">  Mot de passe invalid !</span>
+                                     </div>
+                                     <div class="loginbox-forgot">
+                                        <a  class="azed" (click)="onOpenModal('add')" ><span class="axx">  Mot de passe oublié ?</span></a>
+                                    </div>
+                                     <button [disabled]="addForm.invalid"  (click)="onLoggedin(addForm)" type="submit" class="btnRegister btn btn-primary"  value="Connexion" > Connexion </button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div>
+                        
+                    </div>
+                    <h3  class="register-heading">S’inscrire</h3> 
+                    <div class="row register-form">
+                        <div class="col-md-6">
+                            <div class="col-lg-12 login-key">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
+    
+                        <div class="col-md-6">
+            <!-- alerttttttttt --------------------------------------->
+            <div class="container bootstrap snippets bootdey">
+                <br>
+                <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <strong>Succès!</strong>
+                    {{message}}
+                </div>
+                <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <strong> Erreur !</strong>
+                    {{message}}
+                </div>
+            </div>
+                            
+                    <form #addLogin="ngForm" (ngSubmit)="onAddUser(addLogin)">
+                            <div class="form-row">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                  </span>
+                                </div>
+                                <input  type="text" ngModel name="nom"  class="form-control" placeholder="Votre Nom" aria-label="Username" aria-describedby="basic-addon1"  required> 
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                  </span>
+                                </div>
+                                <input  type="text" ngModel name="prenom"   class="form-control" placeholder="Votre Prenom" aria-label="Username" aria-describedby="basic-addon1"  required > 
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope" aria-hidden="true"></i>
+                                  </span>
+                                </div>
+                                <input  type="email"  ngModel name="email" class="form-control" placeholder="Votre Email" aria-label="Username" aria-describedby="basic-addon1" required email> 
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text" id="basic-addon1"><i class="fa fa-key" aria-hidden="true"></i>
+                                  </span>
+                                </div>
+                                <input  type="password"  ngModel name="password" class="form-control" placeholder="Votre Mot de passe" aria-label="Username" aria-describedby="basic-addon1" required> 
+                            </div>
+                            <div class="form-group">
+
+                                Image:<input type="file" ngModel name="image" class="custom-file" placeholder="Image " value="" required/>
+                                <input type="hidden" ngModel="Client" name="roles"  />
+                            </div>
+                            <button [disabled]="addLogin.invalid" type="submit" class="btn btn-primary btnRegister" >Envoyer</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+</div>				                            
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------------- recuperer mot de passe  -------------------------------- -->
+<!--login modal-->
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <br>
+        <h3 class="haa">Retrouvez votre compte</h3>
+        <br>
+        <div *ngIf="MessageLogin" class="alert alert-dismissible alert-danger">
+            <strong>Echec!</strong> {{MessageLogin}}
+          </div>
+          <div *ngIf="passWord" class="alert alert-dismissible alert-success">
+            <strong>Succès!</strong> votre mot de passe : " {{passWord}} "
+          </div>
+       
+          <div class="modal-body">
+            <form class="form col-md-12 center-block" #getLogin="ngForm">
+        
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                    <input  type="text" ngModel name="nom"   class="form-control" placeholder="Votre nom" aria-label="Username" aria-describedby="basic-addon1"  required > 
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                    <input  type="text" ngModel name="prenom"   class="form-control" placeholder="Votre Prenom" aria-label="Username" aria-describedby="basic-addon1"  required > 
+                </div>
+               
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                    <input  type="text" ngModel name="email"   class="form-control" placeholder="Votre Email" aria-label="Username" aria-describedby="basic-addon1"  required email > 
+                </div>
+              <div class="form-group">
+                <button [disabled]="getLogin.invalid" (click)="getPassWord(getLogin)" class="btn btn-primary btn-lg btn-block">Envoyer</button>
+              </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-1accordion2">
+                <button  (click)="resetForm(getLogin)" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Fermer</button>
+            </div>	
+        </div>
+    </div>
+    </div>
+  </div>

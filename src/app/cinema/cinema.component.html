@@ -1,0 +1,271 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<div id="menu">
+    <app-header></app-header>    
+</div>
+
+
+
+<div class="container" id="main-container">
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-12">
+        
+        <div class="card">
+            <div class="card-header">
+                <h2>Liste de Cinémas  </h2>
+            </div>
+            <div class="form-group mb-2">
+
+                <button type="button" (click)="onOpenModal(null,'add')" class="btn btn-primary bu22"
+                    data-toggle="modal" data-target="#exampleModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path
+                            d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+                    </svg>
+                    Ajouter
+                </button>
+                    
+            <div class="form-inline">
+                <div class="input-group aaaa">
+                    <input  (ngModelChange)="searchCinema(key.value)" #key="ngModel" ngModel type="text" class="form-control" placeholder="Nom Cinema ..." aria-label="Username"
+                        aria-describedby="basic-addon1">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button"  (click)="ngOnInit()" >
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            </div>
+ 
+               <!-- Notification de 0 recherche -->
+
+    <div *ngIf="cinemas?.length === 0" class="col-lg-12 col-md-8 col-xl-8 bbbb">
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Aucun Cinema !</h4>
+            <p>Aucun Cinema trouver !.</p>
+        </div>
+    </div>
+    <!-- ********************************************************************************************-->
+
+            <div class="card-body">
+                
+            <!-- alerttttttttt --------------------------------------->
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="container bootstrap snippets bootdey">
+                <br>
+                <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <strong>Succès!</strong>
+                    {{message}}
+                </div>
+                <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <strong> Erreur !</strong>
+                    {{message}}
+                </div>
+            </div>
+                <table class="table table-striped" *ngIf="cinemas?.length > 0">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Nom Cinema</th>
+                                <th> Description </th>
+                                <th>Nb salles</th>
+                                <th> Ville</th>
+                                <th>Adress</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let c of cinemas">
+                                <td class="table-img"><img src="/assets/image/{{c.image}}" width="0px" alt="">
+                                </td>
+                                <td>
+                                    <h6 class="mb-0 font-13"><b>{{c.nom}}</b></h6>
+                    
+                                </td>
+                                <td class="tdWidth">
+                                    <div class="badge-outline col-green desc">{{c.description}}...</div>
+                                </td>
+                                <td class="text-truncate">
+                                    {{c.nombreSalles}}
+                                </td>
+                                <td>
+                                    <div class="badge-outline col-red">{{c.ville.nom}}</div>
+                                </td>
+                               <td>
+                                <div class="badge-outline col-red">{{c.adress}}</div>
+
+                               </td>
+                                <td>
+                                <a class="text-info" (click)="onOpenModal(c,'edit')"
+                                        data-toggle="tooltip" title="" data-original-title="Edit"><i
+                                            class="fas fa-pencil-alt"></i></a>  &nbsp;
+                                <a class="text-danger" (click)="onOpenModal(c,'delete')"
+                                        data-toggle="tooltip" title="" data-original-title="Delete"><i
+                                            class="far fa-trash-alt"></i></a>
+                               </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--  ***************************************   Add cinema  ****************       -->
+
+
+<div class="modal fade" id="addCinemaModel" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header" >
+            <h4 class="modal-title" id="addEmployeeModalLabel">Ajouter Cinema</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddCinema(addForm)">
+            <div class="form-group">
+               <label for="name">Nom</label>
+               <input type="text"  ngModel name="nom" class="form-control" id="name" placeholder="Azerty.." required>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea ngModel name="description" class="form-control" id="exampleFormControlTextarea1" placeholder="..." rows="3" required></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCity"> Adress </label>
+                  <input ngModel name="adress" type="text" class="form-control" id="inputCity" required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Ville</label>
+                     <select id="inputState" class="form-control" name="ville" [(ngModel)]="ville" required>
+                    <option [ngValue]="c.id" *ngFor="let c of villes">
+                      {{c.nom}}
+                    </option>
+                  </select>  
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="inputZip">Nb Salle </label>
+                  <input ngModel name="nombreSalles" type="number" class="form-control" id="inputZip" pattern="[1-9]{1}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="image"> Image </label><br>
+                <input ngModel type="file" id="imageid" name="image"
+                    accept="image/png, .jpeg, .jpg, image/gif" required><br><br>
+            </div>
+            <div class="modal-footer">
+               <button type="button" id="add-cinema-form" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Envoyer</button>
+            </div>
+            
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+
+    
+
+<!-- **************************** Update form *************************-->    
+<div class="modal fade" id="updateCinemaModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header" >
+            <h4 class="modal-title"id="addEmployeeModalLabel">Modifier  Cinema {{editCinema?.nom}} </h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #editForm="ngForm">
+            <div class="form-group">
+               <label for="name">Nom</label>
+               <input type="text"  ngModel="{{editCinema?.nom}}" name="nom" class="form-control"  placeholder="Azerty.." required>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Description</label>
+                <textarea ngModel="{{editCinema?.description}}" name="description" class="form-control"  placeholder="..." rows="3" required></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputCity"> Adress </label>
+                  <input  ngModel="{{editCinema?.adress}}" name="adress" type="text" class="form-control"  required>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Ville</label>
+                     <select  class="form-control" name="ville" [ngModel]="editCinema?.ville.id" required>
+                    <option  [ngValue]="c.id" *ngFor="let c of villes">
+                      {{c.nom}}
+                    </option>
+                  </select>  
+                </div>
+                <div class="form-group col-md-2">
+                  <label for="inputZip">Nb Salle </label>
+                  <input  ngModel="{{editCinema?.nombreSalles}}" name="nombreSalles" type="number" class="form-control" id="inputZip" pattern="[1-9]{1}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <input  ngModel="{{editCinema?.image}}" type="file"  name="image"
+                    accept="image/png, .jpeg, .jpg, image/gif" ><br><br>
+                    <input  ngModel="{{editCinema?.id}}" name="id" type="hidden" class="form-control"   >
+       
+            </div>
+            <div class="modal-footer">
+               <button type="button" id="fermer-cinema-form" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+               <button   [disabled]="editForm.invalid"(click)="onUpdateCinema(editForm)"   class="btn btn-primary" >Envoyer</button>
+            </div>
+            
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+    
+
+
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteCinemaModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer Cinema  <b class="b">{{deleteCinema?.nom}}</b> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer cette Cinema  "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteCinema(deleteCinema?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

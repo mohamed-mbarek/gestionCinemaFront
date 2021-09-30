@@ -1,0 +1,144 @@
+body{
+    background: #edf1f5;
+    height: 550px;
+}
+.card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    left: 300px;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid transparent;
+    border-radius: 0;
+}
+.rounded-circle{
+    border: 1px solid seagreen;
+}
+h5{
+    color:salmon;
+}
+ul.list-style-none {
+    margin: 0;
+    padding: 0;
+}
+ul.list-style-none li {
+    list-style: none;
+}
+
+.font-light {
+    font-weight: 300;
+}
+.font-20 {
+    font-size: 25px !important;
+}
+
+
+ul.list-style-none li a {
+    color: #313131;
+    padding: 8px 0;
+    display: block;
+    text-decoration: none;
+}
+.text-muted {
+    color: #8898aa!important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.alert-success{
+    margin-top: 8px;
+}
+.modalz-confirm {		
+	color: #636363;
+	width: 325px;
+	font-size: 14px;
+}
+.modalz-confirm .modalz-content {
+	padding: 20px;
+	border-radius: 5px;
+	border: none;
+}
+.modalz-confirm .modal-header {
+	border-bottom: none;   
+	position: relative;
+}
+.modalz-confirm h4 {
+	text-align: center;
+	font-size: 26px;
+	margin: 30px 0 -15px;
+}
+.modalz-confirm .form-control, .modalz-confirm .btn {
+	min-height: 40px;
+	border-radius: 3px; 
+}
+.modalz-confirm .close {
+	position: absolute;
+	top: -5px;
+	right: -5px;
+}	
+.modalz-confirm .modal-footer {
+	border: none;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 13px;
+}	
+.modalz-confirm .icon-box {
+	color: #fff;		
+	position: absolute;
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+	top: -70px;
+	width: 95px;
+	height: 95px;
+	border-radius: 50%;
+	z-index: 9;
+	background:red;
+	padding: 15px;
+	text-align: center;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.modalz-confirm .icon-box i {
+	font-size: 58px;
+	position: relative;
+	top: 3px;
+}
+.modalz-confirm.modal-dialog {
+	margin-top: 80px;
+}
+.modalz-confirm .btn {
+	color: #fff;
+	border-radius: 4px;
+	background: red;
+	text-decoration: none;
+	transition: all 0.4s;
+	line-height: normal;
+	border: none;
+}
+.modalz-confirm .btn:hover, .modalz-confirm .btn:focus {
+	background: red;
+	outline: none;
+}
+.trigger-btn {
+	display: inline-block;
+	margin: 100px auto;
+}
+

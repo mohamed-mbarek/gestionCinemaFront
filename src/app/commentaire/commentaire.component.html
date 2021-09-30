@@ -1,0 +1,130 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<app-header></app-header>
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card">
+                <div class="card-body bg-primary text-white mailbox-widget pb-0">
+                    <h2 class="text-white pb-3">List Commentaires</h2>
+                   </div>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                        <div>
+                            <div class="row p-4 no-gutters align-items-center">
+                                <div class="col-sm-12 col-md-6">
+                                    <h4 class="font-light mb-0"><i class="ti-email mr-2"></i><b> Totals : {{commentaires.length}} Commentaires</b></h4>
+                                </div>
+                                <ul class="list-inline dl mb-0 float-left float-md-right">
+                                    <li class="list-inline-item text-danger">
+                                        <div class="form-inline">
+                                            <div class="input-group aaaa">
+                                                <input #key="ngModel" ngModel (ngModelChange)="searchCommentaire(key.value)"
+                                                    type="text" class="form-control" placeholder="Nom /Prénom /Film ..."
+                                                    aria-label="Username" aria-describedby="basic-addon1">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="button" (click)="ngOnInit()">
+                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                            <!-- Mail list-->
+                            <div class="table-responsive">
+                                <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                    <tbody *ngFor="let c of commentaires">
+                                        <!-- row -->
+                                        <tr *ngIf="!c.vu">
+                                            <!-- star -->
+                                            <td><a (click)="onOpenModal(c,'delete')" class="text-danger"  data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a> </td>
+                                              <td>
+                                                <span class="aa" > <b>{{c.admin.nom}}  {{c.admin.prenom}}</b></span>
+                                            </td>
+                                            <!-- Message -->
+                                            <td class="">
+                                                <a class="link xxc" >
+                                                    <span class="badge badge-pill text-white font-medium badge-success mr-2">Nouveau</span>
+                                                    <span class="font-light text-dark  xc aa"><b>{{c.commentaire}}..</b></span>
+                                                </a>
+                                            </td>
+                                            <!-- Attachment -->
+                                            <td class="">
+                                                <a (click)="save(c.projectionFilm.id,c)" [routerLink]="[ '/Films', c.projectionFilm.film.id ]"><i class="fa fa-film" aria-hidden="true"></i>
+                                                {{c.projectionFilm.film.id}}  {{c.projectionFilm.film.titre}}</a>
+                                            </td>
+                                            <!-- Time -->
+                                            <td class=" aa"> <i class="fa fa-clock-o" aria-hidden="true"></i> {{c.date|date:'medium'}}</td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody *ngFor="let c of commentaires"> 
+                                        <tr *ngIf="c.vu">
+                                            <!-- star -->
+                                            <td><a (click)="onOpenModal(c,'delete')" class="text-danger"  data-toggle="tooltip" title="" data-original-title="Delete"><i class="far fa-trash-alt"></i></a> </td>
+                                            <td>
+                                                <span class="mb-0 text-muted">{{c.admin.nom}}  {{c.admin.prenom}}</span>
+                                            </td>
+                                            <!-- Message -->
+                                            <td class="xxc">
+                                                
+                                                    <span class=" badge badge-pill text-white font-medium badge-warning mr-2">vu</span>
+                                                
+                                                    <span class=" xc text-dark">{{c.commentaire}}</span>
+                                           </td>
+                                            <!-- Attachment -->
+                                            <td>
+                                               <a  (click)="save(c.projectionFilm.id)" [routerLink]="[ '/Films', c.projectionFilm.film.id ]"><i class="fa fa-film" aria-hidden="true"></i>  {{c.projectionFilm.film.titre}}</a></td>
+                                            <!-- Time -->
+                                            <td class="text-muted"><i class="fa fa-clock-o" aria-hidden="true"></i>{{c.date|date:'medium'}}</td>
+                                        </tr>
+                                    
+                                    </tbody>
+                                </table>
+                                <div class="alert alert-dismissible alert-danger" *ngIf="commentaires.length<=0">
+                                    <strong>Aucun commentaire  trouver   
+                                        <i class="fa fa-meh-o" aria-hidden="true"></i>
+                                        .</strong> 
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteCmntModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer ce commentaire de   <b class="b">
+                        {{deleteCommentaires?.admin.nom}}  {{deleteCommentaires?.admin.prenom}}
+                    </b> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer cette commentaire  "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteComentaire(deleteCommentaires?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

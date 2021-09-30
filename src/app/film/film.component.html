@@ -1,0 +1,336 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<app-header></app-header>
+
+<body>
+    <div class="container" id="main-container">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2> Liste de Films</h2>
+                    </div>
+                    <div class="form-group mb-2">
+
+                        <button type="button" (click)="onOpenModal(null,'add')" class="btn btn-primary bu22"
+                            data-toggle="modal" data-target="#exampleModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+                            </svg>
+                            Ajouter
+                        </button>
+
+                        <div class="form-inline">
+                            <div class="input-group aaaa">
+                                <input (ngModelChange)="searchFilm(key.value)" #key="ngModel" ngModel type="text"
+                                    class="form-control" placeholder="Nom film ..." aria-label="Username"
+                                    aria-describedby="basic-addon1">
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="button" (click)="ngOnInit()">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body">
+                        <!-- Notification de 0 recherche -->
+
+                        <div *ngIf="films?.length === 0" class="col-lg-12 col-md-8 col-xl-8 ">
+                            <div class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading">Aucun Film !</h4>
+                                <p>Aucun Film trouver !.</p>
+                            </div>
+                        </div>
+
+
+
+                        <!-- -------------------------alerttttttttt --------------------------------------->
+                        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+                            rel="stylesheet">
+                        <div class="container bootstrap snippets bootdey">
+                            <br>
+                            <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                                <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                <div class="icon">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                                <strong>Succès!</strong>
+                                {{message}}
+                            </div>
+                            <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                                <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                <div class="icon">
+                                    <i class="fa fa-times-circle"></i>
+                                </div>
+                                <strong> Erreur !</strong>
+                                {{message}}
+                            </div>
+                        </div>
+
+
+                        <div class="table-responsive" id="proTeamScroll">
+                            <table *ngIf="films?.length>0" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Titre</th>
+                                        <th>Realisateur</th>
+                                        <th>Date sortie</th>
+                                        <th>Categorie</th>
+                                        <th>Description</th>
+                                        <th>Duree</th>
+                                        <th>Film Annonce </th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let film of films">
+                                        <td class="table-img"><img  src="/assets/image/{{film.photo}}" alt="">
+                                        </td>
+                                        <td width="150px">
+                                            <h6 class="mb-0 font-13">{{film.titre }}</h6>
+
+                                        </td>
+                                        <td>
+                                            <p class="m-0 font-12">
+                                                <span class="col-green font-weight-bold rea">
+                                                    {{film.realisateur}}</span>
+                                            </p>
+                                        </td>
+                                        <td  width="150px">{{film.dateSortie | date:'mediumDate'}}</td>
+                                        <td class="text-truncate zz">
+                                            <b>{{film.categorie.nom}}</b>
+                                        </td>
+                                        <td>
+                                            <div class="badge-outline col-green desc">{{film.description}}...</div>
+                                        </td>
+                                        <td>
+                                            {{film.duree}}
+                                        </td>
+                                        <td>
+                                            <video width="80" height="80" controls
+                                                poster="/assets/image/39748_2420982_236622_image.jpg">
+                                                <source src="/assets/video/{{film.annonce}}" type="video/ogg">
+                                            </video>
+                                        </td>
+
+                                        <td>
+
+                                            <a (click)="onOpenModal(film,'edit')" class="bg-cyan" data-toggle="tooltip"
+                                                title="" data-original-title="Edit"><i
+                                                    class="fas fa-pencil-alt"></i></a>
+                                            &nbsp;<a (click)="onOpenModal(film,'delete')" class="bg-red"
+                                                data-toggle="tooltip" title="" data-original-title="Delete"><i
+                                                    class="far fa-trash-alt"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+<!--  ***************************************   Add Film  ****************       -->
+
+
+<div class="modal fade" id="addFilmModel" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEmployeeModalLabel">Ajouter un Film</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #addForm="ngForm" (ngSubmit)="onAddFilm(addForm)">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Titre </label>
+                            <input type="text" ngModel name="titre" class="form-control" id="name"
+                                placeholder="Azerty.." required>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="name">Realisateur </label>
+                            <input type="text" ngModel name="realisateur" class="form-control" id="name"
+                                placeholder="Xxxx.." required>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea ngModel name="description" class="form-control" id="exampleFormControlTextarea1"
+                            placeholder="..." rows="3" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="inputCity"> Date sortie </label>
+                            <input ngModel name="dateSortie" type="date" class="form-control" id="inputCity" required>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputState">Categorie</label>
+                            <select id="inputState" class="form-control" ngModel name="categorie" required>
+                                <option [ngValue]="c.id" *ngFor="let c of categories">
+                                    {{c.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputZip">Duree </label>
+                            <input ngModel name="duree" type="datetime" class="form-control" id="inputZip"
+                                min="08:00:00" max="10:00:00" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="image"> Image </label><br>
+                        <input ngModel type="file" id="imageid" name="photo" accept="image/png, .jpeg, .jpg, image/gif"
+                            required><br><br>
+
+                        <label for="image"> Annonce Film : [Video] </label><br>
+                        <input ngModel type="file" id="annonceid" name="annonce" accept="video/*" required><br><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="add-film-form" class="btn btn-danger"
+                            data-dismiss="modal">Annuler</button>
+                        <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  **********************************  Edit fotm ****************************** -->
+
+<div class="modal fade" id="updateFilmModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEmployeeModalLabel">Modifier Film</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #editForma="ngForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Titre </label>
+                            <input type="text" ngModel={{editFilm?.titre}} name="titre" class="form-control" id="name"
+                                placeholder="Azerty.." required>
+                        </div>
+                        <div class="form-group col-md-5">
+                            <label for="name">Realisateur </label>
+                            <input type="text" ngModel={{editFilm?.realisateur}} name="realisateur" class="form-control"
+                                id="name" placeholder="Xxxx.." required>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Description</label>
+                        <textarea ngModel={{editFilm?.description}} name="description" class="form-control"
+                            id="exampleFormControlTextarea1" placeholder="..." rows="3" required></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <label for="inputCity"> Date sortie </label>
+                            <input [ngModel]="editFilm?.dateSortie | date:'yyyy-MM-dd'" name="dateSortie" type="date"
+                                class="form-control" id="date" value="{{editFilm?.dateSortie|date:'yyyy-MM-dd'}}">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputState">Categorie</label>
+                            <select id="inputState" class="form-control" [ngModel]="editFilm?.categorie.id"
+                                name="categorie">
+                                <option *ngFor="let c of categories" [ngValue]="c.id">
+                                    {{c.nom}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputZip">Duree </label>
+                            <input ngModel={{editFilm?.duree}} name="duree" type="datetime" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="image"> Image </label>
+                            <input ngModel={{editFilm?.photo}} type="file" id="imageid" name="photo"
+                                accept="image/png, .jpeg, .jpg, image/gif"><br><br>
+                        </div>
+                        
+                        <div class="form-group col-md-2">
+                            <input ngModel={{editFilm?.id}} type="hidden" name="id">
+                      </div>
+                      </div>
+                        <div class="form-group">
+                            <label for="image"> Annonce Film : [Video] </label><br>
+                            <input ngModel={{editFilm?.annonce}} type="file" id="annonceid"  name="annonce" accept="video/*"><br><br>
+                       </div>
+                    <div class="modal-footer">
+                        <button type="button" id="update-form" class="btn btn-danger"
+                            data-dismiss="modal">Annuler</button>
+                        <button (click)="onUpdateFilm(editForma)" [disabled]="editForma.invalid"
+                            class="btn btn-primary">Envoyer</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteFilmModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModelLabel">Effacer cette Film <b class="b">{{deleteFilm?.titre}}</b>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Etes-vous sûr que vous voulez supprimer cette film "
+                </p>
+                <div class="modal-footer">
+                    <button type="button" id="delete-form" class="btn btn-secondary"
+                        data-dismiss="modal">Annuler</button>
+                    <button (click)="onDeleteFilm(deleteFilm?.id)" class="btn btn-danger"
+                        data-dismiss="modal">Effacer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

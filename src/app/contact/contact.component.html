@@ -1,0 +1,95 @@
+<app-menu></app-menu>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet">
+<body>
+    <br>
+<div class="container">
+    <div class="contact__wrapper shadow-lg mt-n9">
+        <div class="row no-gutters">
+            <div class="col-lg-5 contact-info__wrapper gradient-brand-color p-5 order-lg-2">
+                <h3 class="color--white mb-5">Nous contacter</h3>
+    
+                <ul class="contact-info__list list-style--none position-relative z-index-101">
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-envelope"></i></span> oasiscinema@gmail.com
+                    </li>
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-phone"></i></span> 55315395
+                    </li>
+                    <li class="mb-4 pl-4">
+                        <span class="position-absolute"><i class="fas fa-map-marker-alt"></i></span> Avenue Hbibi Bourgiba Mahdia 5100
+                        <div class="mt-3">
+                            &nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.google.com/maps" target="_blank" class="text-link link--right-icon text-white">Obtenir la directions <i class="link__icon fa fa-directions"></i></a>
+                        </div>
+                    </li>
+                </ul>
+    
+           
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d25983.842197658352!2d11.034547357521571!3d35.50476597140722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x130223f79c5df563%3A0x5902b530760d4b81!2sSkifa%20el%20Kahla!5e0!3m2!1sfr!2stn!4v1628333604792!5m2!1sfr!2stn" width="380" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                         </div>
+    
+            <div class="col-lg-7 contact-form__wrapper p-5 order-lg-1">
+                <h3 class="zz"> Espace réclamation</h3>
+                <div *ngIf="send==1" class="alert alert-success" role="alert">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Votre reclamation est enregister.
+                </div>
+                <div *ngIf="send==0" class="alert alert-danger" role="alert">
+                    <i class="fa fa-frown-o" aria-hidden="true"></i>
+                    Echec de l'envoi !
+                </div>
+                
+                <form  #addForm="ngForm" (ngSubmit)="onSendReclamation(addForm)" class="contact-form form-validate" novalidate="novalidate"> 
+                    <div class="row">
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="firstName"> Nom</label>
+                                <input type="text" class="form-control" id="firstName" ngModel name="nom" placeholder="Mbarek" required>
+                                
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="lastName">Prénom</label>
+                                <input type="text" class="form-control" id="lastName" ngModel name="prenom" placeholder="Mohamed" required>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="email">Email</label>
+                                <input type="text" class="form-control" id="email" ngModel name="email" placeholder="mohamed.apple@seed.com" required email>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-6 mb-3">
+                            <div class="form-group">
+                                <label for="phone">Numéro de téléphone</label>
+                                <input type="tel" class="form-control" id="phone" ngModel name="telephone" placeholder="22333555" required pattern="[0-9]{8}">
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-12 mb-3">
+                            <div class="form-group">
+                                <label class="required-field" for="message">Votre réclamation?</label>
+                                <textarea class="form-control" id="message" ngModel name="msg" rows="4" placeholder="Bonjour, je voudrais...." required></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="col-sm-12 mb-3">
+                            <button  [disabled]="addForm.invalid" type="submit" name="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+    
+                    </div>
+                </form>
+            </div>
+            <!-- End Contact Form Wrapper -->
+                
+        </div>
+    </div>
+</div>
+</body>

@@ -1,0 +1,218 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<body>
+<app-menu></app-menu>
+    <div class="container"  id="main-container">
+    <div id="content" class="content p-0">
+        <div class="profile-header" *ngIf="currentFilm">
+            <div class="profile-header-cover"></div>
+    
+            <div class="profile-header-content">
+                <div class="profile-header-img">
+                    <img src="/assets/image/{{currentFilm.photo}}"  alt="" />
+                </div>
+    
+                <div class="profile-header-info">
+                    <h1 class="m-t-sm">{{currentFilm.titre}}</h1>
+                    <h6 class="m-b-sm"><span class=" aa badge-pill text-white font-medium  badge-info mr-3">{{currentFilm.categorie.nom}}</span></h6>
+                </div>
+                
+                <h5 class="usd"> <i class="fa fa-usd" aria-hidden="true"></i> {{currentProjection.prix}} TND </h5>  
+                <h5 class="calendar"><i class="fa fa-calendar" aria-hidden="true"></i> &nbsp;{{currentProjection.dateProjection |date}}</h5>
+                <h6 class="vvv" *ngIf=" currentProjection.salle.nombrePlace - place>0" >Place disponible : {{currentProjection.salle.nombrePlace - place}} </h6>
+                <h5 class="eee" *ngIf="currentProjection.salle.nombrePlace - place<=0">Places    Complet </h5>
+
+            </div>
+    
+        </div>
+    
+        <div class="profile-container" *ngIf="currentFilm">
+            <div class="row row-space-20">
+                <div class="col-md-8">
+                    <div class="tab-content p-0">
+                        <div class="tab-pane active show" id="profile-videos">
+                            <div class="m-b-10"><b>Bande Annonce</b></div>
+    
+                            <div class="row row-space-2">
+                                <div class="col-sm-12">
+                                    <video width="720" height="600" controls  poster="/assets/image/39748_2420982_236622_image.jpg" >
+                                        <source src="/assets/video/{{currentFilm.annonce}}" type="video/ogg">
+                                    </video>     
+                                </div>
+                               </div>
+                         </div>
+                    </div>
+                </div>
+    
+                <div class="col-md-4 hidden-xs hidden-sm">
+                    <ul class="profile-info-list">
+                        <li class="title">Information sur le Film</li>
+                        <li>
+                            <div class="field"> Ville - Cinema - Salle: </div>
+                            <div class="value"> {{currentProjection.salle.cinema.ville.nom}} - {{currentProjection.salle.cinema.nom}} - {{currentProjection.salle.nom}} </div>
+                        </li>
+                        <li>
+                            <div class="field">Realisateur:</div>
+                            <div class="value">{{currentFilm.realisateur}}</div>
+                        </li>
+                       
+                        <li>
+                            <div class="field">Date Sortie:</div>
+                            <div class="value">{{currentFilm.dateSortie |date:'mediumDate'}}</div>
+                        </li>
+                        
+                        <li>
+                            <div class="field">Heure Debut:</div>
+                            <div class="value">{{currentProjection.seance.heureDebut}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Durée Film:</div>
+                            <div class="value">{{currentFilm.duree}}</div>
+                        </li>
+                        <li>
+                            <div class="field">Description:</div>
+                            <div class="value">{{currentProjection.film.description }}</div>
+                        </li>
+                     </ul>
+                </div>
+      
+            </div>
+        </div>
+        
+    </div>
+    <section class="content-item" id="comments">
+        <div class="container">   
+            <div class="row">
+                <div class="col-sm-11">   
+                    <form  *ngIf="adminImage" #addForm="ngForm" (ngSubmit)="addCommentaire(addForm)">
+                        <h3 class="pull-left">Nouveau commentaire</h3>
+                        <button type="submit" class="btn btn-success pull-right">Envoyer</button>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="media-object eee" height="110px" src="/assets/image/{{adminImage}}" alt="">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                    <textarea ngModel name="commentaire" class="form-control" id="message" placeholder="Votre commentaire..." required></textarea>
+                                </div>
+                            </div>  	
+                        </fieldset>
+                        <div  *ngIf="aletSuccess" class="alert alert-success xc" role="alert">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            {{message}}
+                        </div>
+                        <div  *ngIf="aletEroor" class="alert alert-danger xc" role="alert">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            {{message}}
+                        </div>
+               
+                    </form>
+                    
+                    <h3 *ngIf="commentaires.length>0">{{commentaires.length}} Commentaires</h3>
+                    
+                    <!-- COMMENT 1 - START -->
+                   <div *ngIf="commentaires">
+                    <div class="media" *ngFor="let c of commentaires">
+                        <a class="pull-left" href="#"><img class="media-object" height="80px" src="/assets/image/{{c.admin.image}}" alt=""></a>
+                        <div class="media-body">
+                            <h6 class="media-heading">{{c.admin.nom}} {{c.admin.prenom}}</h6>
+                            <p>{{c.commentaire}}</p>
+                            <ul class="list-unstyled list-inline media-detail pull-left">
+                                <li><i class="fa fa-calendar"></i>{{c.date |date:'mediumDate'}}</li>
+                            </ul>
+                        </div>
+                      <div *ngIf="c.admin.id==userId">  
+                        <button (click)="onOpenModal(c,'delete')" type="button" class="btn btn-danger">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            Effacer
+                        </button>
+                        <button  (click)="onOpenModal(c,'edit')" type="button" class="btn btn-primary">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                            Modifier
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- COMMENT 1 - END -->
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+
+
+
+
+
+
+
+
+
+
+
+ <!--  ********************************* Update  une Seance ******************************* -->
+
+
+ <div class="modal fade" id="updateCmntModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog" role="document">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h4 class="modal-title" id="addEmployeeModalLabel">Modifier Commentaire</h4>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+             </button>
+         </div>
+         <div class="modal-body">
+             <form #editForm="ngForm" >
+                 <div class="form-group">
+                     <label for="name"> Commentaire </label>
+                     <textarea ngModel={{editCommentaires?.commentaire}} name="commentaire" class="form-control" id="message" placeholder="Votre commentaire..." required></textarea>
+                     <input type="hidden" ngModel={{editCommentaires?.id}} name="id" >
+                 </div>
+
+                 <div class="modal-footer">
+                     <button type="button" id="fermer-seance" class="btn btn-danger"
+                         data-dismiss="modal">Fermer</button>
+                     <button [disabled]="editForm.invalid" (click)="editCommentaire(editForm)"   class="btn btn-primary">Envoyer</button>
+                 </div>
+
+             </form>
+         </div>
+     </div>
+ </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteCmntModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer ce commentaire    
+                    </h5>
+                  
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer votre  commentaire  !</p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteComentaire(deleteCommentaires?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

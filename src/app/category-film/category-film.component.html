@@ -1,0 +1,215 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<div id="menu">
+    <app-header></app-header>
+</div>
+
+<body>
+    <div class="container" id="main-container">
+        <div class="row md-m-25px-b m-45px-b justify-content-center text-center">
+            <div class="col-lg-9">
+                <h2 class="h1 m-15px-b">Liste de categories</h2>
+                <p class="m-0px font-2"> Le genre cinématographique permet de catégoriser les films en fonction de leurs
+                    thèmes .</p>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group mb-2">
+
+            <button type="button" (click)="onOpenModal(null,'add')" class="btn btn-primary bu22" data-toggle="modal"
+                data-target="#exampleModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+                </svg>
+                Ajouter
+            </button>
+
+            <div class="form-inline">
+                <div class="input-group aaaa">
+                    <input (ngModelChange)="searchCategorie(key.value)" #key="ngModel" ngModel type="text"
+                        class="form-control" placeholder="Nom gategorie ..." aria-label="Username"
+                        aria-describedby="basic-addon1">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" type="button bu22" (click)="ngOnInit()">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ***************************************  Listt **************************-->
+        <div class="row">
+
+            <!-- alerttttttttt --------------------------------------->
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+            <div class="container bootstrap snippets bootdey">
+                <br>
+                <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-check"></i>
+                    </div>
+                    <strong>Succès!</strong>
+                    {{message}}
+                </div>
+                <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                    <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                    <div class="icon">
+                        <i class="fa fa-times-circle"></i>
+                    </div>
+                    <strong> Erreur !</strong>
+                    {{message}}
+                </div>
+            </div>
+
+            <div *ngFor="let c of categories" class="col-lg-4">
+                <div class="card m-b-30">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="mt-0 font-18 mb-1">{{c.nom}}</h3>
+                                <p class=" font-14 az"> Films de type {{c.nom}}</p>
+                                <ul class="social-links list-inline mb-0">
+                                    <li class="list-inline-item">
+                                        <a (click)="onOpenModal(c,'edit')" title="" data-placement="top"
+                                            data-toggle="tooltip" class="tooltips bb" data-original-title="Facebook"><i
+                                                class="fas fa-pencil-alt"></i></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a title="" (click)="onOpenModal(c,'delete')" data-placement="top"
+                                            data-toggle="tooltip" class="tooltips aa" data-original-title="Twitter"><svg
+                                                xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd"
+                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg></a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+
+
+
+    <!--  ********************************* Ajouter une Cat ******************************* -->
+
+
+    <div class="modal fade" id="addCatModel" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addEmployeeModalLabel">Ajouter une Categorie</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #addForm="ngForm" (ngSubmit)="onAddCategorie(addForm)">
+                        <div class="form-group">
+                            <label for="name">Nom </label>
+                            <input type="text" ngModel name="nom" class="form-control" id="nom" placeholder="Name"
+                                required minlength="4" #noma="ngModel">
+
+                            <span *ngIf=" noma.touched && noma.invalid " class="help-block cc"> Verifier votre code
+                                postale ! </span>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" id="add-ville-form" class="btn btn-danger"
+                                data-dismiss="modal">Fermer</button>
+                            <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ***************************************** Update Ville ***************************-->
+
+    <div class="modal fade" id="updateCatModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addEmployeeModalLabel">Modifier Categorie {{editCategorie?.nom}}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form #editForm="ngForm">
+                        <div class="form-group">
+                            <label for="name">Nom </label>
+                            <input type="text" ngModel={{editCategorie?.nom}} name="nom" class="form-control" id="nom"
+                                placeholder="Name" required minlength="4" #cc>
+                            <span *ngIf=" cc.touched && cc.invalid " class="help-block cc"> Verifier votre code
+                                postale ! </span>
+                        </div>
+                        <input type="hidden" ngModel={{editCategorie?.id}} name="id">
+                        <div class="modal-footer">
+                            <button type="button" id="aaaa" class="btn btn-danger" data-dismiss="modal">Fermer</button>
+                            <button [disabled]="editForm.invalid" (click)="onUpdateCategorie(editForm.value)"
+                                type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ********************* Delete Modal *********************** -->
+    <div class="modal fade" id="deleteCatModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer categorie </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer cette categorie " <b
+                            class="b">{{deleteCategorie?.nom}}</b> "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteCategorie(deleteCategorie?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification de 0 recherche -->
+    <div *ngIf="categories?.length === 0" class="col-lg-12 col-md-8 col-xl-8 bbbb">
+        <div class="alert alert-danger aaq" role="alert">
+            <h4 class="alert-heading">Aucune categorie !</h4>
+            <p>Aucune ville categorie !.</p>
+        </div>
+    </div>
+</body>

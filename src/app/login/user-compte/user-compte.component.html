@@ -1,0 +1,167 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<app-menu></app-menu>
+<body>
+<div class="container" id="main-container">
+    <div class="row">
+        
+        <div class="col-md-12 col-lg-5">
+            <div class="card">
+                <div class="p-4">
+                    <div class="d-flex flex-row">
+                        <div class=""><img src="/assets/image/{{user?.image}}" alt="user" class="rounded-circle" width="100" /></div>
+                        <div class="pl-4">
+                            <h3>{{user?.nom}} {{user?.prenom}}</h3>
+                            <h5>{{user?.roles}}</h5>
+                            <button (click)="onOpenModal(user,'edit')" class="btn btn-success btn-rounded text-white text-uppercase font-14"><i class="fa fa-pencil" aria-hidden="true"></i> Modifier</button>&nbsp;
+                            <button (click)="onOpenModal(user,'delete')" class="btn btn-danger btn-rounded text-white text-uppercase font-14"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
+                        </div>
+                    </div>
+                    <div *ngIf="aletSuccess" class="alert alert-dismissible alert-success">
+                        <strong>Succès!</strong> Modifier avec succès .
+                      </div>
+                    <div class="row mt-5">
+                  
+                        <div class="col border-right text-center">
+                            <h4 class="font-light">Email</h4>
+                            <h4 class="">{{user?.email}}</h4>
+                        </div>
+                        <div class="col text-center">
+                            <h4 class="font-light">Mot de passe</h4>
+                            <h4 class="">{{user?.password}}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+
+<!--     *************************  Update Userr  ******************************************* -->
+
+<div class="modal fade" id="updateUseModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="addEmployeeModalLabel">Modefier Un <b>{{editUser?.roles}}</b></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #editForm="ngForm">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="name">Nom</label>
+                            <input type="text" ngModel="{{editUser?.nom}}" name="nom" class="form-control" id="name"
+                                placeholder="Azerty.." required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleFormControlTextarea1">Prenom</label>
+                            <input type="text" ngModel="{{editUser?.prenom}}" name="prenom" class="form-control"
+                                id="name" placeholder="Azerty.." required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputCity"> Email </label>
+                        <input ngModel="{{editUser?.email}}" name="email" type="text" class="form-control"
+                            id="inputCity" required email #email="ngModel">
+                        <span *ngIf="email.invalid && email.touched " class="help-block cc"> Verifier votre Email!
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputState"> Mot de passe </label>
+                        <input ngModel="{{editUser?.password}}" name="password" type="text" class="form-control"
+                            id="inputCity" required>
+                    </div>
+                    <label for="inputState"> Roles </label>
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" [ngModel]="editUser?.roles"
+                            name="roles" required #select="ngModel">
+                            <option value="Admin">Administrateur </option>
+                            <option value="Assistant"> Assistant</option>
+                            <option value="Client"> Client</option>
+
+                        </select>
+                    </div>
+                    <p *ngIf="select.invalid && select.touched" class="help-block cc"> Choisir une option ! </p>
+                    <input ngModel type="file" ngModel="{{editUser?.image}}" id="imageid" name="image"
+                    accept="image/png, .jpeg, .jpg, image/gif">
+                    <input type="hidden" ngModel="{{editUser?.id}}" id="id" name="id"><br><br>
+                    <div class="modal-footer">
+                        <button type="button" id="fermer-user" class="btn btn-danger"
+                            data-dismiss="modal">Annuler</button>
+                        <button (click)="onUpdateUser(editForm.value)" [disabled]="editForm.invalid"
+                            class="btn btn-primary">Envoyer</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-------------------------------- http erreur  -----------------------------------------       -->
+    <div id="httpErreur" class="modal fade">
+        <div class="modal-dialog modalz-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    </div>
+                    <h4 class="modal-title w-100">échec !</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="">{{messageErreur}}
+                        <i class="fa fa-meh-o" aria-hidden="true"></i> .
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    
+
+    <!--  ********************** Delete Modal ************************* -->
+
+    <div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer personne </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer votre compte  " <b class="b">{{deleteUser?.nom}}
+                            {{deleteUser?.prenom}} </b> "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-user-form" class="btn btn-secondary"
+                            data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteUser(deleteUser?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

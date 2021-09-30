@@ -1,0 +1,204 @@
+<app-header></app-header>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="container" id="main-container"> 
+    <div class="row">
+        <div class="col-md-12 col-lg-8">
+            <div class="card">
+                <div class="card-body bg-primary text-white mailbox-widget pb-0">
+                    <h2 class="text-white pb-3">Liste Réservation </h2>
+                </div>
+
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                        <div>
+                            <div class="row p-4 no-gutters align-items-center">
+                                <div class="col-sm-12 col-md-6">
+                                    <h4 class="font-light mb-0"><i class="ti-email mr-2" *ngIf="tickets"></i> <b>Totals: {{tickets.length}} réservations</b></h4>
+                                </div>
+                                <ul class="list-inline dl mb-0 float-left float-md-right">
+                                    <li class="list-inline-item text-danger">
+                                        <div class="form-inline" *ngIf="tickets">
+                                            <div class="input-group aaaa">
+                                                <input #key="ngModel" ngModel (ngModelChange)="searchTicket(key.value)"
+                                                    type="text" class="form-control" placeholder="Nom /Prénom /Film ..."
+                                                    aria-label="Username" aria-describedby="basic-addon1">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-success" type="button" (click)="ngOnInit()">
+                                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </li>
+                                </ul>
+
+                            </div>
+                            
+                            <!-- Mail list-->
+                            <div class="table-responsive">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12">
+                                            <div class="">
+                                                <div class="carda-body">
+                                                    <div class="table-responsive" id="proTeamScroll">
+                                                       
+                                              <!-- alerttttttttt --------------------------------------->
+                                              <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+                                              <div class="container bootstrap snippets bootdey">
+                                                  <br>
+                                                  <div class="alert alert-success alert-white rounded" *ngIf="aletSuccess">
+                                                      <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                                      <div class="icon">
+                                                          <i class="fa fa-check"></i>
+                                                      </div>
+                                                      <strong>Succès!</strong>
+                                                      {{message}}
+                                                  </div>
+                                                  <div class="alert alert-danger alert-white rounded" *ngIf="aletEroor">
+                                                      <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                                                      <div class="icon">
+                                                          <i class="fa fa-times-circle"></i>
+                                                      </div>
+                                                      <strong> Erreur !</strong>
+                                                      {{message}}
+                                                  </div>
+                                              </div>
+                                                                                                    
+                                                        <table class="table table-striped" *ngIf="tickets.length>0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Image</th>
+                                                                    <th width="150px">Nom & prénom</th>
+                                                                    <th></th>
+                                                                    <th>Film</th>
+                                                                    <th width="200px"> Date reservation</th>
+                                                                    <th>Nombre de places</th>
+                                                                    <th>Monatan à payer</th>
+                                                                    <th>Code paiement</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody *ngFor="let t of tickets">
+                                                                <tr (click)="onVuRecReservation(t)" *ngIf="!t.vu">
+                                                                 
+                                                                    <td class="table-img"><img
+                                                                            src="/assets/image/{{t.admin.image}}">
+                                                                    </td>
+                                                                    <td>
+                                                                    <b>{{t.admin.nom}}
+                                                                            {{t.admin.prenom}}</b>
+                                                                       
+                                                                    </td>
+                                                                    <td>    
+                                                                        <span  class="badge xcxc badge-pill text-white font-medium badge-success mr-2">new</span>
+                                                                    </td>
+
+                                                                    <td><b>{{t.projection.film.titre}}</b></td>
+                                                                    <td><b>{{t.date |date:'medium'}}</b></td>
+                                                                    <td>
+                                                                        <p class="xx"><b>{{t.nombre}}</b></p>
+                                                                    </td>
+                                                                    <td class="xx">
+                                                                        <b>
+                                                                        {{t.nombre * t.projection.prix}}TND
+                                                                        </b>
+                                                                    </td>
+                                                                    <td class="xx">
+                                                                        <b>
+                                                                        {{t.codePayement}}
+                                                                        </b>  
+                                                                    </td>
+                                                                    <td>
+                                                                        <a (click)="onOpenModal(t,'delete')" data-toggle="tooltip" title=""
+                                                                            data-original-title="Delete"><i
+                                                                                class="far fa-trash-alt"></i></a>
+                                                                          </td>
+                                                                        </tr>
+                                                             </tbody>
+                                                             <tbody *ngFor="let t of tickets">
+                                                                <tr (click)="onVuRecReservation(t)" *ngIf="t.vu">
+                                                                            <td class="table-img"><img
+                                                                                    src="/assets/image/{{t.admin.image}}">
+                                                                            </td>
+                                                                            <td>
+                                                                              {{t.admin.nom}} {{t.admin.prenom}}
+                                                                                </td>
+                                                                                <td>
+                                                                                    <span  class=" xcxc badge badge-pill text-white font-medium badge-warning mr-2">Vu</span>
+                                                                                </td>
+                                                                                <td>{{t.projection.film.titre}}</td>
+                                                                                <td>{{t.date | date:'medium'}}</td>
+                                                                                <td>
+                                                                                <p class="xx">{{t.nombre}}</p>
+                                                                            </td>
+                                                                            <td class="xx">
+                                                                                
+                                                                                {{t.nombre * t.projection.prix}}TND
+                                                                            
+                                                                            </td>
+                                                                            <td class="xx">
+                                                                                {{t.codePayement}}
+                                                                                
+                                                                            </td>
+                                                                            <td>
+                                                                                <a (click)="onOpenModal(t,'delete')" data-toggle="tooltip" title=""
+                                                                                    data-original-title="Delete"><i
+                                                                                        class="far fa-trash-alt"></i></a>
+                                                                                  </td>
+                                                                                </tr>
+                                                              </tbody>
+                                                        </table>
+                                                        <div class="alert alert-dismissible alert-danger" *ngIf="tickets.length<=0">
+                                                            <strong>Aucun reservation trouver   
+                                                                <i class="fa fa-meh-o" aria-hidden="true"></i>
+                                                                .</strong> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteResModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Effacer cette  Reservation de   <b class="b">
+                        {{deleteReservation?.admin.nom}}  {{deleteReservation?.admin.prenom}}
+                    </b> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez supprimer cette Reservation  "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteReservation(deleteReservation?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    

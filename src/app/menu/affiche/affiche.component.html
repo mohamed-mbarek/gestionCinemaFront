@@ -1,0 +1,10 @@
+<link rel="stylesheet" href="//cdn.materialdesignicons.com/3.7.95/css/materialdesignicons.min.css">
+<app-menu></app-menu>
+<ngb-carousel>
+  <ng-template ngbSlide *ngFor="let event of affiches">
+    <div class="team-name">
+      <h2 class="sa">{{event.film.titre}}</h2>
+    </div>
+    <img src="/assets/image/{{event.image}}" alt="Random slide">
+  </ng-template>
+</ngb-carousel>

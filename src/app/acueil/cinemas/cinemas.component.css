@@ -1,0 +1,36 @@
+#header {
+  background: url(https://www.nti-audio.com/portals/0/pics/en/Teaser-Cinema-1200-500.jpg) center center / cover no-repeat ;
+}
+img{
+    max-height: 200px;
+    min-height: 200px;
+
+}
+body{
+    background-color: #eaeaea;
+}
+.bi-geo-alt{
+    color: green;
+}
+.card{
+    background-color: rgba(35, 100, 185, 0.247);
+    min-height: 470px;
+}
+h1{
+    color: rgb(0, 0, 0);
+}
+h5{
+    color: indianred;
+}
+samp{
+    color:rgb(59, 95, 59);
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" >
+    <div class="row ">
+        <div class="col-sm-3  hidden-xs " >
+            <div class="product-sidebar ">
+                <!-- Featured Product Item -->
+                <div class="product-item " >
+                    <a (click)="onselected()">                    <div class="image">
+                        <a ><img src="/assets/image/{{cinema.image}}" alt="Product 4"></a>
+                    </div>
+                    <div class="name">
+                        <a>{{cinema.nom}}</a>
+                    </div>
+                    <br>
+                    <div class="price">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+                            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                          </svg>
+                        <span>{{cinema.ville.nom}}</span>
+                    </div>
+</a>
+                </div>
+    <!--/ Featured Product Item -->
+            </div>
+        </div>
+    </div>
+</div>

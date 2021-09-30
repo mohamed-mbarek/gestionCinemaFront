@@ -1,0 +1,99 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<app-menu></app-menu>
+<body>
+<div class="container padding-bottom-3x mb-1" id="main-container">
+    <!-- Alert-->
+    <div *ngIf="historiques.length<1">
+        <div class="alert alert-danger alert-dismissible fade show text-center" style="margin-bottom: 30px; position: relative; top: 20px;">
+            <span class="alert-close" data-dismiss="alert"></span>
+            &nbsp;&nbsp;Vous avez <strong> aucune </strong> réservation trouver  <i class="fa fa-meh-o" aria-hidden="true"></i>
+        </div>
+    </div>
+        <!-- Shopping Cart-->
+    <div class="table-responsive shopping-cart"  >
+        <table *ngIf="historiques.length>0" class="table"  >
+            <thead>
+                <tr>
+                    <th>Titre film</th>
+                    <th class="text-center">Nombre de places</th>
+                    <th class="text-center">Coût total</th>
+                    <th class="text-center">Code payement</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let h of historiques">
+                    <td>
+                        <div class="product-item">
+                            <a class="product-thumb" href="#"><img src="/assets/image/{{h.projection.film.photo}}" alt="Product"></a>
+                            <div class="product-info">
+                                <h4 class="product-title"><a href="#">{{h.projection.film.titre}}</a></h4><span><em>Date :</em> {{h.date|date}}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        {{h.nombre}}
+                    </td>
+                    <td class="text-center text-lg text-medium">{{h.nombre * h.projection.prix}} TND</td>
+                    <td class="text-center"><b>{{h.codePayement}}</b></td>
+                    <td class="text-center"><a class="remove-from-cart" (click)="onOpenModal(h,'delete')" data-toggle="tooltip" title="" data-original-title="Remove item"> <button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>                    </a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="shopping-cart-footer">
+         </div>
+</div>
+</body>
+
+
+
+    <!----------------------------------------------------- Delete Modal ------------------------------>
+    <div class="modal fade" id="deleteTicketModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModelLabel">Annuler reservation  de ce film :<b class="b">{{deleteReservation?.projection.film.titre}}</b> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Etes-vous sûr que vous voulez annuler cette reservation !  "
+                    </p>
+                    <div class="modal-footer">
+                        <button type="button" id="delete-form" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                        <button (click)="onDeleteTicket(deleteReservation?.id)" class="btn btn-danger"
+                            data-dismiss="modal">Effacer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--------------------------------  impossible  -----------------------------------------       -->
+    <div id="impoTicketModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="icon-box">
+                        <i class=""><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>                    </i>
+                    </div>				
+                    <h4 class="modal-title w-100">échec !</h4>	
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">la date de projection est dépassé
+                        <i class="fa fa-meh-o" aria-hidden="true"></i>  .
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>     
+    
+
